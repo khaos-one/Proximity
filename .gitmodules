@@ -1,0 +1,3 @@
+[submodule "Tesla"]
+	path = Tesla
+	url = https://github.com/khaos-one/tesla.git
