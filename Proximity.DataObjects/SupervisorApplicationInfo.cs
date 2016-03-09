@@ -4,7 +4,7 @@ using ProtoBuf;
 namespace Proximity.DataObjects {
     [Serializable]
     [ProtoContract]
-    public sealed class ApplicationInfo
+    public sealed class SupervisorApplicationInfo
     {
         [ProtoMember(1)]
         public string Executable { get; set; }
@@ -26,5 +26,7 @@ namespace Proximity.DataObjects {
 
         [ProtoMember(7)]
         public bool Autorestart { get; set; }
+
+
     }
 }

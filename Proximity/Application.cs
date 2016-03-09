@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using Proximity.Configuration;
+using Proximity.DataObjects;
 using Tesla.Logging;
 
 namespace Proximity {
@@ -18,7 +14,8 @@ namespace Proximity {
         private bool _stopping;
         private bool _plannedStop;
 
-        public string Executable { get; private set; }
+        public string Executable { get; }
+        public SupervisorApplicationInfo Info { get; }
 
         public Application(ApplicationConfig config) {
             if (config == null) {
@@ -29,6 +26,8 @@ namespace Proximity {
                 throw new ArgumentException(nameof(config.Executable));
             }
 
+            Info = config.ToInfo();
+            Executable = config.Executable;
             _startInfo = new ProcessStartInfo(config.Executable) {
                 UseShellExecute = false,
                 CreateNoWindow = true

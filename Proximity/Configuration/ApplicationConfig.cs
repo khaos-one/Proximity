@@ -1,4 +1,5 @@
 ﻿using System;
+using Proximity.DataObjects;
 using YamlDotNet.Serialization;
 
 namespace Proximity.Configuration {
@@ -24,5 +25,17 @@ namespace Proximity.Configuration {
 
         [YamlMember(Alias = "autorestart")]
         public bool Autorestart { get; set; }
+
+        public SupervisorApplicationInfo ToInfo() {
+            return new SupervisorApplicationInfo {
+                Executable = Executable,
+                Arguments = Arguments,
+                WorkingDirectory = WorkingDirectory,
+                ExecuteAsUser = ExecuteAsUser,
+                OutFile = OutFile,
+                ErrorFile = ErrorFile,
+                Autorestart = Autorestart
+            };
+        }
     }
 }
