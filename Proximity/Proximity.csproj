@@ -60,6 +60,7 @@
     <Compile Include="Configuration\ApplicationConfig.cs" />
     <Compile Include="Configuration\ProximityConfig.cs" />
     <Compile Include="Configuration\ServerConfig.cs" />
+    <Compile Include="Configuration\ServerUserConfig.cs" />
     <Compile Include="IApplication.cs" />
     <Compile Include="ProximityService.cs">
       <SubType>Component</SubType>

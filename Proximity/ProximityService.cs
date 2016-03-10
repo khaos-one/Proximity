@@ -17,6 +17,10 @@ namespace Proximity {
         private Stream _logStream;
         private Server _server;
 
+        public List<IApplication>  Applications => _applications;
+        public ProximityConfig Config => _config;
+        public Server Server => _server;
+
         public ProximityService() {
             InitializeComponent();
         }

@@ -4,8 +4,9 @@ using Proximity.DataObjects;
 
 namespace Proximity {
     public interface IApplication : IDisposable {
+        string Name { get; }
         string Executable { get; }
-        SupervisorApplicationInfo Info { get; }
+        ApplicationInfo Info { get; }
 
         void Start();
         void Stop();

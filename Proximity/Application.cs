@@ -14,8 +14,9 @@ namespace Proximity {
         private bool _stopping;
         private bool _plannedStop;
 
+        public string Name { get; }
         public string Executable { get; }
-        public SupervisorApplicationInfo Info { get; }
+        public ApplicationInfo Info { get; }
 
         public Application(ApplicationConfig config) {
             if (config == null) {
@@ -28,6 +29,7 @@ namespace Proximity {
 
             Info = config.ToInfo();
             Executable = config.Executable;
+            Name = config.Name;
             _startInfo = new ProcessStartInfo(config.Executable) {
                 UseShellExecute = false,
                 CreateNoWindow = true

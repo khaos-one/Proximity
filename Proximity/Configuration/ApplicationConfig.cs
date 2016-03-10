@@ -5,6 +5,9 @@ using YamlDotNet.Serialization;
 namespace Proximity.Configuration {
     [Serializable]
     public sealed class ApplicationConfig {
+        [YamlMember(Alias = "name")]
+        public string Name { get; set; }
+
         [YamlMember(Alias = "executable")]
         public string Executable { get; set; }
 
@@ -26,8 +29,8 @@ namespace Proximity.Configuration {
         [YamlMember(Alias = "autorestart")]
         public bool Autorestart { get; set; }
 
-        public SupervisorApplicationInfo ToInfo() {
-            return new SupervisorApplicationInfo {
+        public ApplicationInfo ToInfo() {
+            return new ApplicationInfo {
                 Executable = Executable,
                 Arguments = Arguments,
                 WorkingDirectory = WorkingDirectory,
