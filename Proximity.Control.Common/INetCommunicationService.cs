@@ -8,19 +8,19 @@ namespace Proximity.Control.Common {
         void Ping();
 
         [OperationContract]
-        void Start();
-
-        [OperationContract]
-        void Stop();
-
-        [OperationContract]
-        void Restart();
-
-        [OperationContract]
         IEnumerable<ApplicationInfo> GetApplications();
 
         [OperationContract]
         ApplicationInfo GetApplication(string name);
+
+        [OperationContract]
+        void StartApplication(string name);
+
+        [OperationContract]
+        void StopApplication(string name);
+
+        [OperationContract]
+        void RestartApplication(string name);
 
         [OperationContract]
         HostSystemInfo GetSystemInfo();
