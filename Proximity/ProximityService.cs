@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.ServiceProcess;
 using Proximity.Configuration;
 using Proximity.Control.Common;
@@ -58,8 +56,14 @@ namespace Proximity {
 
         protected override void OnStop() {
             _applications?.ForEach(x => {
-                x.Stop();
-                x.Dispose();
+                try {
+                    x.Stop();
+                    x.Dispose();
+                }
+                catch {
+                    // ignored
+                }
+
                 Log.Entry(Priority.Notice, $"Application {x.Executable} stopped.");
             });
 

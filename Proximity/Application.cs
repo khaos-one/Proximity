@@ -11,7 +11,7 @@ namespace Proximity {
         private Process _process;
         private StreamWriter _stdErr;
         private StreamWriter _stdOut;
-        private bool _stopping;
+        private bool _stopping = true;
         private bool _plannedStop;
 
         public string Name { get; }
@@ -30,7 +30,7 @@ namespace Proximity {
             Info = config.ToInfo();
             Executable = config.Executable;
             Name = config.Name;
-            _startInfo = new ProcessStartInfo(config.Executable) {
+            _startInfo = new ProcessStartInfo(Path.GetFullPath(config.Executable)) {
                 UseShellExecute = false,
                 CreateNoWindow = true
             };
@@ -44,7 +44,7 @@ namespace Proximity {
             }
 
             if (!string.IsNullOrWhiteSpace(config.WorkingDirectory)) {
-                _startInfo.WorkingDirectory = config.WorkingDirectory;
+                _startInfo.WorkingDirectory = Path.GetFullPath(config.WorkingDirectory);
             }
 
             if (!string.IsNullOrEmpty(config.ErrorFile)) {
@@ -55,7 +55,7 @@ namespace Proximity {
             }
 
             if (!string.IsNullOrEmpty(config.OutFile)) {
-                _stdErr = !File.Exists(config.OutFile)
+                _stdOut = !File.Exists(config.OutFile)
                     ? File.CreateText(config.OutFile)
                     : new StreamWriter(config.OutFile, true);
                 _startInfo.RedirectStandardOutput = true;
@@ -63,6 +63,10 @@ namespace Proximity {
         }
 
         public void Start() {
+            if (_stopping == false) {
+                throw new InvalidOperationException("Application is already started.");
+            }
+
             _stopping = false;
             _process = new Process {StartInfo = _startInfo, EnableRaisingEvents = true};
             _process.Exited += Process_Exited;
@@ -83,6 +87,14 @@ namespace Proximity {
         }
 
         public void Stop() {
+            if (_stopping) {
+                throw new InvalidOperationException("Application is already stopped.");
+            }
+
+            if (_process == null) {
+                throw new InvalidOperationException("Process was detached from service.");
+            }
+
             _stopping = true;
 
             //if (_timer != null)

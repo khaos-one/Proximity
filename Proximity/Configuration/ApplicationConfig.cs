@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using Proximity.Control.Common;
 using YamlDotNet.Serialization;
 
@@ -30,8 +31,9 @@ namespace Proximity.Configuration {
         public bool Autorestart { get; set; }
 
         public ApplicationInfo ToInfo() {
-            return new ApplicationInfo {
-                Executable = Executable,
+            var result = new ApplicationInfo {
+                Name = Name,
+                Executable = Path.GetFullPath(Executable),
                 Arguments = Arguments,
                 WorkingDirectory = WorkingDirectory,
                 ExecuteAsUser = ExecuteAsUser,
@@ -39,6 +41,12 @@ namespace Proximity.Configuration {
                 ErrorFile = ErrorFile,
                 Autorestart = Autorestart
             };
+
+            if (!string.IsNullOrWhiteSpace(result.WorkingDirectory)) {
+                result.WorkingDirectory = Path.GetFullPath(result.WorkingDirectory);
+            }
+
+            return result;
         }
     }
 }

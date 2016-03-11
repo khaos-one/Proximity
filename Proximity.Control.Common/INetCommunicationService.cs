@@ -5,13 +5,22 @@ namespace Proximity.Control.Common {
     [ServiceContract]
     public interface INetCommunicationService {
         [OperationContract]
+        void Ping();
+
+        [OperationContract]
+        void Start();
+
+        [OperationContract]
         void Stop();
 
         [OperationContract]
-        IList<IApplication> GetApplications();
+        void Restart();
 
         [OperationContract]
-        IApplication GetApplication(string name);
+        IEnumerable<ApplicationInfo> GetApplications();
+
+        [OperationContract]
+        ApplicationInfo GetApplication(string name);
 
         [OperationContract]
         HostSystemInfo GetSystemInfo();
