@@ -10,8 +10,5 @@ namespace Proximity.Configuration {
 
         [YamlMember(Alias = "password-sha1")]
         public string PasswordSha1 { get; set; }
-
-        [YamlMember(Alias = "access")]
-        public UserAccessLevel Access { get; set; }
     }
 }

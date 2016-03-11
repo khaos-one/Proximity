@@ -1,12 +1,20 @@
 ﻿---
 log-file: Proximity.log
-server:
-  address: 0.0.0.0
-  port: 2500
+local-comm:
+  pipe: "net.pipe://localhost/proximity/local"
+net-comm:
+  pipe: "net.pipe://0.0.0.0/proximity/net"
+  server-cert: SeverCertificate.pfx
   users:
     - user: khaos
       password-sha1: d1bca54fd4a8822c583c693583b17e8f47e9eb5e
-      access: All
+#server:
+#  address: 0.0.0.0
+#  port: 2500
+#  users:
+#    - user: khaos
+#      password-sha1: d1bca54fd4a8822c583c693583b17e8f47e9eb5e
+#      access: All
 apps:
   - name: testapp
     executable: ../../../TestApp/bin/Debug/TestApp.exe

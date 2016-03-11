@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Proximity.Control")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Proximity supervisor service local control utility.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Proximity.Control")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCompany("Egor khaos Zelensky")]
+[assembly: AssemblyProduct("Proximity")]
+[assembly: AssemblyCopyright("Copyright © Egor khaos Zelensky, 2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

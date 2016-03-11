@@ -159,6 +159,7 @@ namespace Proximity {
                 Log.Entry(Priority.Warning, "Application `{0}` unexpectedly exited with code {1}, restarting.",
                     _startInfo.FileName, _process.ExitCode);
 
+            _stopping = true;
             Start();
         }
 

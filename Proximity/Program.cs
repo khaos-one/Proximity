@@ -18,7 +18,7 @@ namespace Proximity {
             LocalCommunicationService = new ServiceHost(typeof (WcfLocalCommunicationService));
             var pipe = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);
             LocalCommunicationService.AddServiceEndpoint(typeof (ILocalCommunicationService), pipe,
-                "net.pipe://localhost/proximity/local");
+                Service.Config.LocalComm.Pipe);
             LocalCommunicationService.BeginOpen(null, null);
 
             RunServices();

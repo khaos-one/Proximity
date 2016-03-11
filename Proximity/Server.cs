@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Linq;
 using System.Net;
 using System.Net.Security;
-using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using ProtoBuf;
@@ -13,7 +11,7 @@ using Tesla.Logging;
 using Tesla.Net;
 
 namespace Proximity {
-    [Obsolete]
+    [Obsolete("Used WCF instead of custom-made server.")]
     public sealed class Server : ThreadedSslServer {
         private ProximityService _service;
 
@@ -66,18 +64,18 @@ namespace Proximity {
                 try {
                     switch (request.Type) {
                         case RequestType.Authenticate:
-                            var authinfo = ProtoSerializer.Deserialize<UserLoginCredentials>(request.Payload);
-                            user =
-                                _service.Config.Server.Users.FirstOrDefault(
-                                    x =>
-                                        x.UserName.Equals(authinfo.UserName) &&
-                                        x.PasswordSha1.Equals(authinfo.PasswordSha1));
+                            //var authinfo = ProtoSerializer.Deserialize<UserLoginCredentials>(request.Payload);
+                            //user =
+                            //    _service.Config.Server.Users.FirstOrDefault(
+                            //        x =>
+                            //            x.UserName.Equals(authinfo.UserName) &&
+                            //            x.PasswordSha1.Equals(authinfo.PasswordSha1));
 
-                            if (user == null) {
-                                ProtoSerializer.SerializeNetwork(stream, new Response {
-                                    Status = ResponseStatus.InvalidCredentials
-                                });
-                            }
+                            //if (user == null) {
+                            //    ProtoSerializer.SerializeNetwork(stream, new Response {
+                            //        Status = ResponseStatus.InvalidCredentials
+                            //    });
+                            //}
                             break;
 
                         case RequestType.Unknown:

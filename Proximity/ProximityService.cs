@@ -22,10 +22,8 @@ namespace Proximity {
 
         public ProximityService() {
             InitializeComponent();
-        }
 
-        protected override void OnStart(string[] args) {
-            var configPath = args.Length > 1 ? args[0] : "Default.yml";
+            var configPath = "Config.yml";
 
             if (!File.Exists(configPath)) {
                 throw new ConfigurationErrorsException("Cannot find any configuraiton file, aborting.");
@@ -42,6 +40,9 @@ namespace Proximity {
             Log.DefaultLogStream = _logStream;
 
             _applications = new List<IApplication>(_config.Applications.Select(x => new Application(x)));
+        }
+
+        protected override void OnStart(string[] args) {
             _applications.ForEach(x => {
                 x.Start();
                 Log.Entry(Priority.Notice, $"Application {x.Executable} started under supervisor.");
