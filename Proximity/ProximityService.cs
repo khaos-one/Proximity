@@ -63,8 +63,8 @@ namespace Proximity {
                 Log.Entry(Priority.Notice, $"Application {x.Executable} stopped.");
             });
 
-            _server.Stop();
-            _server.Dispose();
+            //_server.Stop();
+            //_server.Dispose();
 
             Log.Entry(Priority.Notice, "Proximity infomation server stopped.");
             Log.Entry(Priority.Notice, "Proximity supervisor stopped.");
