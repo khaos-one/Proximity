@@ -1,5 +1,5 @@
 ﻿---
-log-file: supervisor.log
+log-file: Proximity.log
 server:
   address: 0.0.0.0
   port: 2500
@@ -8,20 +8,25 @@ server:
       password-sha1: d1bca54fd4a8822c583c693583b17e8f47e9eb5e
       access: All
 apps:
-  - name: slashcube
-    executable: /opt/slashcube.server2/SlashCube.Server.exe
-    args: ""
-    working-dir: /opt/slashcube.server2
-    exec-as-user: monorow
-    out-file: /var/log/slashcube.server2.out.log
-    error-file: /var/log/slashcube.server2.error.log
+  - name: testapp
+    executable: ../../../TestApp/bin/Debug/TestApp.exe
+    out-file: TestApp.out.log
+    error-file: TestApp.error.log
     autorestart: true
-  - name: catchi
-    executable: /opt/catchi.server/CatChi.Server.exe
-    args: ""
-    working-dir: /opt/catchi.server
-    exec-as-user: monorow
-    out-file: /var/log/catchi.server.out.log
-    error-file: /var/log/catchi.server.error.log
-    autorestart: true
+#  - name: slashcube
+#    executable: /opt/slashcube.server2/SlashCube.Server.exe
+#    args: ""
+#    working-dir: /opt/slashcube.server2
+#    exec-as-user: monorow
+#    out-file: /var/log/slashcube.server2.out.log
+#    error-file: /var/log/slashcube.server2.error.log
+#    autorestart: true
+#  - name: catchi
+#    executable: /opt/catchi.server/CatChi.Server.exe
+#    args: ""
+#    working-dir: /opt/catchi.server
+#    exec-as-user: monorow
+#    out-file: /var/log/catchi.server.out.log
+#    error-file: /var/log/catchi.server.error.log
+#    autorestart: true
 

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.IO;
 using Proximity.Configuration;
-using Proximity.DataObjects;
+using Proximity.Control.Common;
 using Tesla.Logging;
 
 namespace Proximity {
@@ -151,7 +151,9 @@ namespace Proximity {
         }
 
         public void Dispose() {
-            Stop();
+            if (_process != null) {
+                Stop();
+            }
         }
     }
 }

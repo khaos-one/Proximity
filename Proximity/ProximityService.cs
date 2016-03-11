@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.ServiceProcess;
 using Proximity.Configuration;
+using Proximity.Control.Common;
 using Tesla.Logging;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -48,8 +49,8 @@ namespace Proximity {
                 Log.Entry(Priority.Notice, $"Application {x.Executable} started under supervisor.");
             });
 
-            _server = new Server(IPAddress.Parse(_config.Server.Address), _config.Server.Port);
-            _server.Start();
+            //_server = new Server(this, IPAddress.Parse(_config.Server.Address), _config.Server.Port);
+            //_server.Start();
 
             Log.Entry(Priority.Notice, "Proximity information server started.");
             Log.Entry(Priority.Notice, "Proximity supervisor started.");

@@ -42,6 +42,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Xml" />
     <Reference Include="Tesla">
@@ -61,7 +62,6 @@
     <Compile Include="Configuration\ProximityConfig.cs" />
     <Compile Include="Configuration\ServerConfig.cs" />
     <Compile Include="Configuration\ServerUserConfig.cs" />
-    <Compile Include="IApplication.cs" />
     <Compile Include="ProximityService.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -71,6 +71,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <Compile Include="WcfLocalCommunicationService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Default.yml">
@@ -79,6 +80,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Proximity.Control.Common\Proximity.Control.Common.csproj">
+      <Project>{2c608830-07c3-4036-800c-59f4373d50e1}</Project>
+      <Name>Proximity.Control.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Proximity.DataObjects\Proximity.DataObjects.csproj">
       <Project>{eaa6baf1-1064-49fc-a803-e58d4c90b003}</Project>
       <Name>Proximity.DataObjects</Name>

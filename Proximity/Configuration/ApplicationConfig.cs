@@ -1,5 +1,5 @@
 ﻿using System;
-using Proximity.DataObjects;
+using Proximity.Control.Common;
 using YamlDotNet.Serialization;
 
 namespace Proximity.Configuration {

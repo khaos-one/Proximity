@@ -1,13 +1,32 @@
-﻿using Tesla.ServiceProcess;
+﻿using System;
+using System.ServiceModel;
+using Proximity.Control.Common;
+using Tesla.ServiceProcess;
 
 namespace Proximity {
-    static class Program {
+    internal static class Program {
+        internal static ProximityService Service { get; private set; }
+        internal static ServiceHost LocalCommunicationService { get; private set; }
+        internal static ServiceHost NetCommuncationService { get; private set; }
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
-        static void Main() {
+        internal static void Main() {
+            Service = new ProximityService();
+
+            LocalCommunicationService = new ServiceHost(typeof (WcfLocalCommunicationService));
+            var pipe = new NetNamedPipeBinding(NetNamedPipeSecurityMode.None);
+            LocalCommunicationService.AddServiceEndpoint(typeof (ILocalCommunicationService), pipe,
+                "net.pipe://localhost/proximity/local");
+            LocalCommunicationService.BeginOpen(null, null);
+
+            RunServices();
+        }
+
+        internal static void RunServices() {
             var services = new ServiceList {
-                new ProximityService()
+                Service
             };
             services.RunInteractive();
         }

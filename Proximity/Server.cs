@@ -13,6 +13,7 @@ using Tesla.Logging;
 using Tesla.Net;
 
 namespace Proximity {
+    [Obsolete]
     public sealed class Server : ThreadedSslServer {
         private ProximityService _service;
 

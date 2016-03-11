@@ -1,15 +1,20 @@
 ﻿using System;
-using System.Security.Cryptography.X509Certificates;
-using Proximity.DataObjects;
+using System.ServiceModel;
 
-namespace Proximity {
+namespace Proximity.Control.Common {
+    [ServiceContract]
     public interface IApplication : IDisposable {
         string Name { get; }
         string Executable { get; }
         ApplicationInfo Info { get; }
 
+        [OperationContract]
         void Start();
+
+        [OperationContract]
         void Stop();
+
+        [OperationContract]
         void Restart();
     }
 }
