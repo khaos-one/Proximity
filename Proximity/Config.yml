@@ -3,8 +3,8 @@ log-file: Proximity.log
 local-comm:
   pipe: "net.pipe://localhost/proximity/local"
 net-comm:
-  pipe: "net.pipe://0.0.0.0/proximity/net"
-  server-cert: SeverCertificate.pfx
+  address: "net.tcp://localhost:25001/proximity/net"
+  server-cert: ServerCertificate.pfx
   users:
     - user: khaos
       password-sha1: d1bca54fd4a8822c583c693583b17e8f47e9eb5e
