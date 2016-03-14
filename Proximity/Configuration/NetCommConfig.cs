@@ -11,6 +11,9 @@ namespace Proximity.Configuration {
         [YamlMember(Alias = "server-cert")]
         public string ServerCertificate { get; set; }
 
+        [YamlMember(Alias = "identity")]
+        public string Identity { get; set; }
+
         [YamlMember(Alias = "users")]
         public List<ServerUserConfig> Users { get; set; }
     }

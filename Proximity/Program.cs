@@ -38,7 +38,7 @@ namespace Proximity {
                         AlgorithmSuite = SecurityAlgorithmSuite.Basic128Sha256Rsa15
                     },
                     Transport = new TcpTransportSecurity {
-                        ClientCredentialType = TcpClientCredentialType.None,
+                        ClientCredentialType = TcpClientCredentialType.Certificate,
                         ProtectionLevel = ProtectionLevel.EncryptAndSign,
                         SslProtocols = SslProtocols.Tls
                     }
@@ -47,7 +47,7 @@ namespace Proximity {
             NetCommuncationService = new ServiceHost(typeof (WcfNetCommunicationService)) {
                 Credentials = {
                     ServiceCertificate = {
-                        Certificate = new X509Certificate2(Service.Config.NetComm.ServerCertificate)
+                        Certificate = new X509Certificate2(Service.Config.NetComm.ServerCertificate),
                     },
                     ClientCertificate = {
                         Authentication = {
@@ -61,8 +61,14 @@ namespace Proximity {
                     }
                 }
             };
-            NetCommuncationService.AddServiceEndpoint(typeof (INetCommunicationService), netBinding,
-                Service.Config.NetComm.Address);
+            //var netEp = NetCommuncationService.AddServiceEndpoint(typeof (INetCommunicationService), netBinding,
+            //    Service.Config.NetComm.Address);
+            var netEp = new ServiceEndpoint(ContractDescription.GetContract(typeof (INetCommunicationService)),
+                netBinding,
+                new EndpointAddress(new Uri(Service.Config.NetComm.Address),
+                    EndpointIdentity.CreateX509CertificateIdentity(
+                        NetCommuncationService.Credentials.ServiceCertificate.Certificate)));
+            NetCommuncationService.AddServiceEndpoint(netEp);
             NetCommuncationService.BeginOpen(null, null);
 
             RunServices();

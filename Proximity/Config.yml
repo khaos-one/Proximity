@@ -5,6 +5,7 @@ local-comm:
 net-comm:
   address: "net.tcp://localhost:25001/proximity/net"
   server-cert: ServerCertificate.pfx
+  identity: 127.0.0.1
   users:
     - user: khaos
       password-sha1: d1bca54fd4a8822c583c693583b17e8f47e9eb5e
