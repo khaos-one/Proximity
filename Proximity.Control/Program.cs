@@ -128,8 +128,7 @@ namespace Proximity.Control {
                             },
                             Transport = new TcpTransportSecurity {
                                 ClientCredentialType = TcpClientCredentialType.Certificate,
-                                ProtectionLevel = ProtectionLevel.EncryptAndSign,
-                                SslProtocols = SslProtocols.Tls
+                                ProtectionLevel = ProtectionLevel.EncryptAndSign
                             }
                         }
                     };
@@ -148,9 +147,9 @@ namespace Proximity.Control {
                                     CustomCertificateValidator = new CustomCertificateValidator()
                                 }
                             },
-                            ClientCertificate = {
-                                Certificate = new X509Certificate2("ClientCertificate.pfx")
-                            }
+                            //ClientCertificate = {
+                            //    Certificate = new X509Certificate2("ClientCertificate.pfx")
+                            //}
                         }
                     };
 
@@ -158,7 +157,8 @@ namespace Proximity.Control {
                         var netChannel = netChannelFactory.CreateChannel();
                         netChannel.Ping();
 
-                        WriteLine("SUCCESS: Proximity service is reachable by network.");
+                        WriteLine("SUCCESS: Proximity service is reachable by network.",
+                            foregroundColor: ConsoleColor.Green);
                     }
                     catch (Exception e) {
                         Fail($"Proximity service is unreachable or username/password pair is incorrect: {e.Message}.");

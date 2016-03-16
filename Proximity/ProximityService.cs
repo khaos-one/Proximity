@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.ServiceProcess;
 using Proximity.Configuration;
 using Proximity.Control.Common;
+using Tesla.Extensions;
 using Tesla.Logging;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
@@ -23,10 +25,10 @@ namespace Proximity {
         public ProximityService() {
             InitializeComponent();
 
-            var configPath = "Config.yml";
+            var configPath = ConfigurationManager.AppSettings["ConfigFilePath"].DefaultOnEmpty("Config.yml");
 
             if (!File.Exists(configPath)) {
-                throw new ConfigurationErrorsException("Cannot find any configuraiton file, aborting.");
+                throw new ConfigurationErrorsException("Cannot find any configuration file, aborting.");
             }
 
             using (var fs = File.OpenText(configPath)) {
@@ -44,7 +46,13 @@ namespace Proximity {
 
         protected override void OnStart(string[] args) {
             _applications.ForEach(x => {
-                x.Start();
+                try {
+                    x.Start();
+                }
+                catch (Exception e) {
+                    Log.Entry(Priority.Error, $"Process `{x.Name}` (`{x.Executable}`) failed to start: {e.Message}.");
+                }
+
                 Log.Entry(Priority.Notice, $"Application {x.Executable} started under supervisor.");
             });
 
@@ -61,8 +69,8 @@ namespace Proximity {
                     x.Stop();
                     x.Dispose();
                 }
-                catch {
-                    // ignored
+                catch (Exception e) {
+                    Log.Entry(Priority.Error, $"Process `{x.Name}` (`{x.Executable}`) failed to stop: {e.Message}.");
                 }
 
                 Log.Entry(Priority.Notice, $"Application {x.Executable} stopped.");

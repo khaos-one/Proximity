@@ -13,6 +13,7 @@ namespace Proximity {
         private StreamWriter _stdOut;
         private bool _stopping = true;
         private bool _plannedStop;
+        private bool _isBroken = false;
 
         public string Name { get; }
         public string Executable { get; }
@@ -63,6 +64,10 @@ namespace Proximity {
         }
 
         public void Start() {
+            if (_isBroken) {
+                throw new InvalidOperationException("Process is broken, aborting start.");
+            }
+
             if (_stopping == false) {
                 throw new InvalidOperationException("Application is already started.");
             }
@@ -77,7 +82,13 @@ namespace Proximity {
             if (_stdOut != null)
                 _process.OutputDataReceived += Process_OutputDataReceived;
 
-            _process.Start();
+            try {
+                _process.Start();
+            }
+            catch {
+                _isBroken = true;
+                throw;
+            }
 
             if (_stdErr != null)
                 _process.BeginErrorReadLine();
@@ -87,6 +98,10 @@ namespace Proximity {
         }
 
         public void Stop() {
+            if (_isBroken) {
+                throw new InvalidOperationException("Process is broken, aborting stop.");
+            }
+
             if (_stopping) {
                 throw new InvalidOperationException("Application is already stopped.");
             }
@@ -131,6 +146,10 @@ namespace Proximity {
         }
 
         public void Restart() {
+            if (_isBroken) {
+                throw new InvalidOperationException("Process is broken, aborting restart.");
+            }
+
             Stop();
             Start();
         }
@@ -152,12 +171,18 @@ namespace Proximity {
         }
 
         private void Process_Exited(object sender, EventArgs e) {
-            if (_stopping)
+            if (_isBroken) {
                 return;
+            }
 
-            if (!_plannedStop)
+            if (_stopping) {
+                return;
+            }
+
+            if (!_plannedStop) {
                 Log.Entry(Priority.Warning, "Application `{0}` unexpectedly exited with code {1}, restarting.",
                     _startInfo.FileName, _process.ExitCode);
+            }
 
             _stopping = true;
             Start();

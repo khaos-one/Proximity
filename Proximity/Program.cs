@@ -38,9 +38,8 @@ namespace Proximity {
                         AlgorithmSuite = SecurityAlgorithmSuite.Basic128Sha256Rsa15
                     },
                     Transport = new TcpTransportSecurity {
-                        ClientCredentialType = TcpClientCredentialType.Certificate,
-                        ProtectionLevel = ProtectionLevel.EncryptAndSign,
-                        SslProtocols = SslProtocols.Tls
+                        ClientCredentialType = TcpClientCredentialType.None,
+                        ProtectionLevel = ProtectionLevel.EncryptAndSign
                     }
                 }
             };
@@ -78,7 +77,7 @@ namespace Proximity {
             var services = new ServiceList {
                 Service
             };
-            services.RunInteractive();
+            services.RunServices();
         }
     }
 }
